@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}New complaint · HostelCare{% endblock %}
+{% block content %}
+<div class="page-heading"><div><div class="eyebrow">STUDENT SPACE</div><h1>Register a complaint</h1><p>Describe the issue clearly so the right team can help.</p></div><a class="btn secondary" href="{{ url_for('dashboard') }}">← Dashboard</a></div>
+<div class="form-card wide">
+<form method="post" enctype="multipart/form-data">
+<div class="form-grid">
+<label class="span-two">Complaint title<input name="title" required maxlength="120" placeholder="e.g. Water leakage in bathroom"></label>
+<label>Category<select name="category" required>{% for category in categories %}<option value="{{ category }}">{{ category }}</option>{% endfor %}</select></label>
+<label>Priority<select name="priority">{% for priority in priorities %}<option value="{{ priority }}" {% if priority == 'Medium' %}selected{% endif %}>{{ priority }}</option>{% endfor %}</select></label>
+<label class="span-two">Hostel / block / room location<input name="location" required maxlength="150" placeholder="e.g. Block B, Room 204"></label>
+<label class="span-two">Problem description<textarea name="description" required rows="5" placeholder="Explain what happened and when you noticed it..."></textarea></label>
+<label class="span-two">Attach a photo <small>(optional · PNG/JPG/WEBP · max 5 MB)</small><input type="file" name="image" accept=".png,.jpg,.jpeg,.webp"></label>
+</div><div class="form-actions"><a href="{{ url_for('dashboard') }}" class="text-link">Cancel</a><button class="btn primary" type="submit">Submit complaint →</button></div>
+</form></div>
+{% endblock %}

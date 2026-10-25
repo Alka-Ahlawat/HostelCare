@@ -1,0 +1,3 @@
+{% extends "base.html" %}
+{% block title %}{{ code }} · HostelCare{% endblock %}
+{% block content %}<div class="empty-state error-page"><div class="empty-symbol">{{ code }}</div><h1>Something went wrong</h1><p>{{ message }}</p><a class="btn primary" href="{{ url_for('dashboard') if current_user else url_for('index') }}">Go back</a></div>{% endblock %}

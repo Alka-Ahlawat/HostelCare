@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}HostelCare · Home{% endblock %}
+{% block content %}
+<section class="hero">
+  <div class="hero-copy">
+    <div class="eyebrow">SMARTER HOSTEL MAINTENANCE</div>
+    <h1>Report it. Track it.<br><span>Get it fixed.</span></h1>
+    <p>A single digital place for students, wardens, and maintenance teams to manage hostel issues from submission to resolution.</p>
+    <div class="hero-actions"><a class="btn primary" href="{{ url_for('register') }}">Get started →</a><a class="btn secondary" href="{{ url_for('login') }}">Log in</a></div>
+    <div class="trust-line">✓ Digital complaints &nbsp; ✓ Clear status &nbsp; ✓ Better accountability</div>
+  </div>
+  <div class="hero-art">
+    <div class="mock-window"><div class="mock-top"><i></i><i></i><i></i><span>Complaint overview</span></div>
+      <div class="mock-stat"><small>OPEN COMPLAINTS</small><strong>12</strong><span class="pill amber">Needs attention</span></div>
+      <div class="mock-task"><div class="task-icon blue">⌁</div><div><b>Wi-Fi not working</b><small>Block B · Room 204</small></div><span class="pill blue-pill">In progress</span></div>
+      <div class="mock-task"><div class="task-icon orange">⚡</div><div><b>Tube light damaged</b><small>Block A · Floor 2</small></div><span class="pill green-pill">Assigned</span></div>
+      <div class="progress-label"><span>Resolution progress</span><b>75%</b></div><div class="progress"><span></span></div>
+    </div>
+    <div class="floating-note">✓ Complaint updates in one place</div>
+  </div>
+</section>
+<section class="features">
+  <div class="section-heading"><div class="eyebrow">ONE PORTAL, THREE ROLES</div><h2>Maintenance without the confusion</h2><p>Every user sees the tools they need.</p></div>
+  <div class="feature-grid">
+    <article class="feature-card"><div class="feature-icon blue">♙</div><h3>For Students</h3><p>Submit complaints, add a photo, track progress, and rate the service after resolution.</p></article>
+    <article class="feature-card"><div class="feature-icon purple">▦</div><h3>For Wardens</h3><p>Review requests, assign staff, set priorities, and monitor overall maintenance performance.</p></article>
+    <article class="feature-card"><div class="feature-icon green">✓</div><h3>For Maintenance Staff</h3><p>See assigned tasks, record progress, and mark work as resolved.</p></article>
+  </div>
+</section>
+<div class="demo-box"><b>Want to explore the demo?</b><span>Use the sample accounts in README.md after starting the app.</span><a href="{{ url_for('login') }}">Open login →</a></div>
+{% endblock %}

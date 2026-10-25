@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Student sign up · HostelCare{% endblock %}
+{% block content %}
+<div class="auth-layout"><section class="auth-aside"><div class="eyebrow">JOIN HOSTELCARE</div><h1>Make your<br>voice count.</h1><p>Register once and keep your hostel maintenance requests organized in one place.</p><div class="mini-flow">Report <span>→</span> Track <span>→</span> Feedback</div></section>
+<section class="form-card"><h2>Create student account</h2><p class="muted">All fields are required.</p>
+<form method="post">
+<label>Full name<input name="name" required maxlength="100" placeholder="Your full name"></label>
+<label>Email address<input type="email" name="email" required placeholder="you@example.com"></label>
+<label>Password <small>(minimum 8 characters)</small><input type="password" name="password" required minlength="8" placeholder="Create a password"></label>
+<button class="btn primary full" type="submit">Create account →</button>
+</form><p class="form-bottom">Already registered? <a href="{{ url_for('login') }}">Log in</a></p></section></div>
+{% endblock %}

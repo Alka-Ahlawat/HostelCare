@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}HostelCare Portal{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="{{ url_for('index') }}"><span class="brand-icon">H</span> HostelCare</a>
+  <nav>
+    {% if current_user %}
+      <a href="{{ url_for('dashboard') }}">Dashboard</a>
+      {% if current_user.role == 'student' %}<a href="{{ url_for('new_complaint') }}">New Complaint</a>{% endif %}
+      <span class="user-chip">{{ current_user.name }} · {{ current_user.role|title }}</span>
+      <a class="nav-logout" href="{{ url_for('logout') }}">Log out</a>
+    {% else %}
+      <a href="{{ url_for('login') }}">Log in</a><a class="nav-cta" href="{{ url_for('register') }}">Student Sign Up</a>
+    {% endif %}
+  </nav>
+</header>
+<main class="container">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}<div class="flash-list">{% for category, message in messages %}<div class="flash {{ category }}">{{ message }}</div>{% endfor %}</div>{% endif %}
+  {% endwith %}
+  {% block content %}{% endblock %}
+</main>
+<footer>HostelCare · Hostel Complaint & Maintenance Management Portal <span>Academic project prototype</span></footer>
+</body>
+</html>

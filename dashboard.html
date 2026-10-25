@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Dashboard · HostelCare{% endblock %}
+{% block content %}
+<div class="page-heading"><div><div class="eyebrow">{{ current_user.role|upper }} DASHBOARD</div><h1>{% if current_user.role == 'student' %}Your complaints{% elif current_user.role == 'admin' %}Maintenance overview{% else %}Assigned work{% endif %}</h1><p>{% if current_user.role == 'student' %}Follow every request from submission to resolution.{% elif current_user.role == 'admin' %}Monitor workload, response progress, and recurring issues.{% else %}Review your assigned complaints and keep their progress updated.{% endif %}</p></div>
+{% if current_user.role == 'student' %}<a class="btn primary" href="{{ url_for('new_complaint') }}">＋ New complaint</a>{% endif %}</div>
+<div class="stats-grid">
+<div class="stat-card"><span>Total complaints</span><strong>{{ stats.total }}</strong><small>All recorded requests</small></div>
+<div class="stat-card"><span>Pending / active</span><strong>{{ stats.pending }}</strong><small>Still needs attention</small></div>
+<div class="stat-card"><span>Resolved / closed</span><strong>{{ stats.resolved }}</strong><small>Completed requests</small></div>
+<div class="stat-card"><span>Resolution rate</span><strong>{{ stats.rate }}%</strong><small>Resolved ÷ total</small></div>
+</div>
+{% if current_user.role == 'admin' %}
+<div class="analytics-grid">
+<section class="panel"><div class="panel-heading"><h2>Complaints by category</h2><span class="muted">Frequency</span></div>
+{% if stats.categories %}{% for row in stats.categories %}<div class="bar-row"><span>{{ row.category }}</span><div class="bar-track"><i style="width: {{ (row['count'] / stats.total * 100) if stats.total else 0 }}%"></i></div><b>{{ row['count'] }}</b></div>{% endfor %}{% else %}<p class="empty-small">Category analytics will appear when complaints are registered.</p>{% endif %}</section>
+<section class="panel"><div class="panel-heading"><h2>Response performance</h2></div><div class="big-metric">{% if stats.average_hours is not none %}{{ stats.average_hours }} <small>hours</small>{% else %}—{% endif %}</div><p class="muted">Average time to resolution for resolved complaints.</p><h3 class="subheading">Repeated locations</h3>
+{% if stats.repeat_locations %}{% for row in stats.repeat_locations %}<div class="repeat-row"><span>{{ row.location }}</span><b>{{ row['count'] }} reports</b></div>{% endfor %}{% else %}<p class="empty-small">Repeated-location insights will appear as data grows.</p>{% endif %}</section>
+</div>
+{% endif %}
+<section class="panel table-panel"><div class="panel-heading"><h2>{% if current_user.role == 'admin' %}All complaints{% elif current_user.role == 'staff' %}My assigned complaints{% else %}Complaint history{% endif %}</h2><span class="muted">{{ complaints|length }} record(s)</span></div>
+{% if complaints %}
+<div class="table-wrap"><table><thead><tr><th>Complaint</th>{% if current_user.role != 'student' %}<th>Student</th>{% endif %}<th>Category</th><th>Priority</th><th>Status</th>{% if current_user.role != 'student' %}<th>Assigned staff</th>{% endif %}<th>Submitted</th><th></th></tr></thead><tbody>
+{% for c in complaints %}<tr><td><a class="complaint-link" href="{{ url_for('complaint_detail', complaint_id=c.id) }}">#{{ c.id }} · {{ c.title }}</a><small class="table-sub">{{ c.location }}</small></td>{% if current_user.role != 'student' %}<td>{{ c.student_name }}</td>{% endif %}<td>{{ c.category }}</td><td><span class="priority {{ c.priority|lower }}">{{ c.priority }}</span></td><td><span class="status {{ c.status|lower|replace(' ','-') }}">{{ c.status }}</span></td>{% if current_user.role != 'student' %}<td>{{ c.staff_name or 'Unassigned' }}</td>{% endif %}<td>{{ c.created_at[:10] }}</td><td><a class="arrow-link" href="{{ url_for('complaint_detail', complaint_id=c.id) }}">View →</a></td></tr>{% endfor %}
+</tbody></table></div>
+{% else %}<div class="empty-state"><div class="empty-symbol">▤</div><h3>No complaints yet</h3><p>{% if current_user.role == 'student' %}Your registered complaints will appear here.{% elif current_user.role == 'staff' %}No complaints have been assigned to you yet.{% else %}Student submissions will appear here automatically.{% endif %}</p>{% if current_user.role == 'student' %}<a class="btn primary" href="{{ url_for('new_complaint') }}">Register first complaint</a>{% endif %}</div>{% endif %}
+</section>
+{% endblock %}

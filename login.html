@@ -1,0 +1,112 @@
+
+{% extends "base.html" %}
+{% block title %}Login | HostelCare{% endblock %}
+
+{% block content %}
+<section class="login-home">
+
+  <header class="login-heading">
+    <div class="login-logo">H</div>
+    <h1>HostelCare</h1>
+    <p class="login-tagline">
+      HOSTEL COMPLAINT &amp; MAINTENANCE PORTAL
+    </p>
+    <div class="gold-line"></div>
+    <h2>Welcome Back</h2>
+    <p>Select your account type to continue</p>
+  </header>
+
+  <div class="login-cards">
+
+    <article class="login-card">
+      <div class="login-icon">♙</div>
+      <h3>Student Login</h3>
+      <p>Submit complaints and track their progress.</p>
+      <button type="button" class="login-now"
+        onclick="selectLoginRole('student')">
+        Login Now
+      </button>
+    </article>
+
+    <article class="login-card">
+      <div class="login-icon">♜</div>
+      <h3>Admin Login</h3>
+      <p>Manage complaints, monitor requests and assign staff.</p>
+      <button type="button" class="login-now"
+        onclick="selectLoginRole('admin')">
+        Login Now
+      </button>
+    </article>
+
+    <article class="login-card">
+      <div class="login-icon">⚙</div>
+      <h3>Staff Login</h3>
+      <p>Update assigned repairs and manage complaint progress.</p>
+      <button type="button" class="login-now"
+        onclick="selectLoginRole('staff')">
+        Login Now
+      </button>
+    </article>
+
+    <article class="login-card">
+      <div class="login-icon">▤</div>
+      <h3>Maintenance</h3>
+      <p>Keep hostel maintenance organized and up to date.</p>
+      <button type="button" class="login-now"
+        onclick="selectLoginRole('staff')">
+        Login Now
+      </button>
+    </article>
+
+  </div>
+
+  <section class="login-form-section" id="login-form-section">
+    <div class="login-form-card">
+      <h2 id="form-heading">Sign in to HostelCare</h2>
+      <p>Enter your account details to continue.</p>
+
+      <form method="POST" action="{{ url_for('login') }}">
+        <input type="hidden" name="role"
+          id="selected-role" value="student">
+
+        <label for="email">Email address</label>
+        <input type="email" id="email" name="email"
+          placeholder="Enter your email" required>
+
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password"
+          placeholder="Enter your password" required>
+
+        <button type="submit" class="login-submit">
+          Sign In
+        </button>
+      </form>
+
+      <p class="register-text">
+        Don't have a student account?
+        <a href="{{ url_for('register') }}">Create an account</a>
+      </p>
+    </div>
+  </section>
+
+</section>
+
+<script>
+function selectLoginRole(role) {
+  document.getElementById("selected-role").value = role;
+
+  const names = {
+    student: "Student Login",
+    admin: "Admin Login",
+    staff: "Staff Login"
+  };
+
+  document.getElementById("form-heading").textContent =
+    names[role] + " — Sign In";
+
+  const section = document.getElementById("login-form-section");
+  section.style.display = "block";
+  section.scrollIntoView({ behavior: "smooth", block: "center" });
+}
+</script>
+{% endblock %}
